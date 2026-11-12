@@ -143,14 +143,20 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 STATICFILES_DIRS = (
     BASE_DIR / 'static',
 )
 
+
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+if os.getenv("PYTHONANYWHERE") == "1":
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+else:
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = 'smtp.mailjet.com'
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
@@ -158,6 +164,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 COMPANY_EMAIL = os.getenv('COMPANY_EMAIL')
 
+if os.getenv("PYTHONANYWHERE") == "1":
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 AUTH_USER_MODEL = 'accounts.AppUser'
 

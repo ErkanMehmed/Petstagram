@@ -5,7 +5,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import OuterRef, Exists
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect, resolve_url
-from django.views.generic import TemplateView
+from django.views.generic import ListView
 
 from photos.models import Photo
 
@@ -14,9 +14,9 @@ from common.models import Like
 from common.forms import SearchForm, CommentForm
 
 
-class HomePageView(TemplateView):
+class HomePageView(ListView):
     template_name = 'common/home-page.html'
-    context_object_name = 'all_photo'
+    context_object_name = 'all_photos'
     paginate_by = 1
 
     def get_context_data(self, **kwargs):
