@@ -1,0 +1,107 @@
+{% extends 'shared/base.html' %}
+{% load static %}
+
+{% block content %}
+      <div class="profile">
+
+          <div class="profile-data">
+            <div class="profile_img">
+                <div class="image">
+
+                    {% if object.profile_picture %}
+                        <img src="{{ object.profile_picture }}" alt="img8" />
+                    {% else %}
+                        <img src="{% static 'images/person.png' %}" alt="img8" />
+                    {% endif %}
+                </div>
+            </div>
+            <div class="personal">
+                <div class="edit">
+
+                <p>{{ object.get_full_name }}</p>
+
+
+                {% if object.pk == request.user.pk %}
+                    <a href="{% url 'accounts:edit' object.pk %}">
+                        <img
+                            class="edit-img"
+                            src="{% static 'images/edit-pen-icon-6.jpg' %}"
+                            alt="edit button"
+                        />
+                    </a>
+
+
+                <a href="{% url 'accounts:delete' object.pk %}">
+                    <img
+                        class="bin-img"
+                        src="{% static 'images/icon-remove-22.jpg' %}"
+                        alt="bin button"
+                    />
+                </a>
+                {% endif %}
+
+                </div>
+                <div class="data">
+
+                    <span>{{ total_photos }}</span>
+                    <p>photos</p>
+
+
+                    <span>{{ total_pets }}</span>
+                    <p>pets</p>
+
+
+                    <span>{{ total_likes }}</span>
+                    <p>likes</p>
+                </div>
+
+                <h3 class="names">{{ object.get_full_name }}</h3>
+
+
+                <p class="email">{{ object.user.email }}</p>
+            </div>
+          </div>
+
+
+
+            <div class="pets">
+                <div class="statuses">
+                    {% for pet in object.user.pet_set.all %}
+                        <a href="{% url 'pets:details' pet.slug %}">
+                    <div class="head-pet">
+                        <div class="status">
+                            <div class="image">
+
+                                <img
+                                    src="{{ pet.personal_photo }}"
+                                    alt="pet img"
+                                />
+                            </div>
+                        </div>
+
+                        <p>{{ pet.name }}</p>
+                    </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="pet-photos">
+
+                {% for photo in object.user.photo_set.all %}
+                    <a href="{% url 'photo:details' photo.pk %}">
+
+                        <img
+                            src="{{ photo.photo.url }}"
+                            alt="pet img"
+                        />
+                    </a>
+                {% empty %}
+                    <img
+                        class="no-posts"
+                        src="{% static 'images/no_posts.png' %} "
+                        alt="no posts"
+                    />
+                {% endfor %}
+            </div>
+      </div>
+{% endblock %}
