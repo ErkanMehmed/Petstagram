@@ -98,7 +98,7 @@
                                     <div class="image">
                                         <!-- User Profile Image -->
                                         {% if comment.user.profile.profile_picture %}
-                                            <img src="{{ request.user.profile.profile_picture }}" alt="img8">
+                                            <img src="{{ comment.user.profile.profile_picture.url }}" alt="img8">
                                         {% else %}
                                             <img src="{% static 'images/person.png' %}" alt="img8">
                                         {% endif %}
